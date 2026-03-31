@@ -1,11 +1,16 @@
  'use client'
 
 import { FlowExplorer } from '@/components/FlowExplorer'
+import { DiagramTabs } from '@/components/DiagramTabs'
 import { RuntimeSequenceDiagram } from '@/components/RuntimeSequenceDiagram'
 import { SectionHeader } from '@/components/SectionHeader'
-import { flowCards, t } from '@/content/site'
+import { flowCards, getFlowDiagramViews, t } from '@/content/site'
+import { usePreferences } from '@/components/PreferencesProvider'
 
 export default function FlowsPage() {
+  const { locale } = usePreferences()
+  const diagramViews = getFlowDiagramViews(locale)
+
   return (
     <>
       <SectionHeader
@@ -17,6 +22,7 @@ export default function FlowsPage() {
         )}
       />
       <RuntimeSequenceDiagram />
+      <DiagramTabs views={diagramViews} />
       <FlowExplorer flows={flowCards} />
     </>
   )

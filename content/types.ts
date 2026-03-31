@@ -68,4 +68,5 @@ export type TopFile = {
   title: LocalizedText
   why: LocalizedText
   layer: LocalizedText
+  tracks: Array<'starter' | 'runtime' | 'platform'>
 }

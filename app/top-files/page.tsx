@@ -1,12 +1,28 @@
 'use client'
 
+import { useMemo, useState } from 'react'
 import { FileList } from '@/components/FileList'
 import { SectionHeader } from '@/components/SectionHeader'
 import { usePreferences } from '@/components/PreferencesProvider'
-import { pickText, t, topFiles } from '@/content/site'
+import { pickText, t, topFiles, uiText } from '@/content/site'
+
+type FilterKey = 'all' | 'starter' | 'runtime' | 'platform'
 
 export default function TopFilesPage() {
   const { locale } = usePreferences()
+  const [filter, setFilter] = useState<FilterKey>('all')
+
+  const filteredFiles = useMemo(() => {
+    if (filter === 'all') return topFiles
+    return topFiles.filter(file => file.tracks.includes(filter))
+  }, [filter])
+
+  const filterItems = [
+    { key: 'all' as const, label: pickText(uiText.allFiles, locale) },
+    { key: 'starter' as const, label: pickText(uiText.starterFiles, locale) },
+    { key: 'runtime' as const, label: pickText(uiText.runtimeFiles, locale) },
+    { key: 'platform' as const, label: pickText(uiText.platformFiles, locale) },
+  ]
 
   return (
     <>
@@ -19,8 +35,23 @@ export default function TopFilesPage() {
         )}
       />
 
+      <div className="card">
+        <p className="card-kicker">{locale === 'en' ? 'Filter by learning route' : '按学习路线筛选'}</p>
+        <div className="flow-tabs">
+          {filterItems.map(item => (
+            <button
+              key={item.key}
+              className={filter === item.key ? 'flow-tab active' : 'flow-tab'}
+              onClick={() => setFilter(item.key)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="accordion-list">
-        {topFiles.map((file, index) => (
+        {filteredFiles.map((file, index) => (
           <article className="feature-card" key={file.path}>
             <p className="card-kicker">#{index + 1}</p>
             <h3>
@@ -32,6 +63,13 @@ export default function TopFilesPage() {
             <p>{pickText(file.why, locale)}</p>
             <p>
               <strong>{locale === 'en' ? 'Layer' : '所在层'}:</strong> {pickText(file.layer, locale)}
+            </p>
+            <p>
+              <strong>{locale === 'en' ? 'Track fit' : '适合路径'}:</strong>{' '}
+              {file.tracks
+                .map(track => filterItems.find(item => item.key === track)?.label)
+                .filter(Boolean)
+                .join(' / ')}
             </p>
             <FileList items={[{ path: file.path }]} />
           </article>

@@ -2,12 +2,14 @@
 
 import { ArchitectureMap } from '@/components/ArchitectureMap'
 import { ArchitectureDiagram } from '@/components/ArchitectureDiagram'
+import { DiagramTabs } from '@/components/DiagramTabs'
 import { SectionHeader } from '@/components/SectionHeader'
 import { usePreferences } from '@/components/PreferencesProvider'
-import { t } from '@/content/site'
+import { getArchitectureDiagramViews, t } from '@/content/site'
 
 export default function ArchitecturePage() {
   const { locale } = usePreferences()
+  const diagramViews = getArchitectureDiagramViews(locale)
 
   return (
     <>
@@ -29,6 +31,8 @@ export default function ArchitecturePage() {
       </div>
 
       <ArchitectureDiagram />
+
+      <DiagramTabs views={diagramViews} />
 
       <ArchitectureMap />
 

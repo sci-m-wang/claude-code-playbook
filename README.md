@@ -57,6 +57,7 @@ Important note: the public GitHub repo does not expose the full core CLI source 
 - static export for GitHub Pages
 - theme switching: auto / light / dark
 - bilingual UI and content: English / Chinese
+- richer diagrams with SVG + Mermaid views
 
 ## Local development
 
