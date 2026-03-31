@@ -9,8 +9,8 @@ const sans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '600', '
 const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono' })
 
 export const metadata: Metadata = {
-  title: siteMeta.title,
-  description: siteMeta.description,
+  title: siteMeta.title.en,
+  description: siteMeta.description.en,
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

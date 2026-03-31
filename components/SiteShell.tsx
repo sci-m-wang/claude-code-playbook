@@ -3,21 +3,32 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
-import { primaryNav, siteMeta } from '@/content/site'
+import { pickText, primaryNav, siteMeta, uiText } from '@/content/site'
+import { PreferencesProvider, usePreferences } from '@/components/PreferencesProvider'
 import { SearchPanel } from '@/components/SearchPanel'
+import { ThemeLanguageControls } from '@/components/ThemeLanguageControls'
 
 export function SiteShell({ children }: { children: ReactNode }) {
+  return (
+    <PreferencesProvider>
+      <ShellInner>{children}</ShellInner>
+    </PreferencesProvider>
+  )
+}
+
+function ShellInner({ children }: { children: ReactNode }) {
   const pathname = usePathname()
+  const { locale } = usePreferences()
 
   return (
     <div className="shell">
       <aside className="sidebar">
         <div className="brand-block">
-          <p className="eyebrow">Claude Code Source Study</p>
+          <p className="eyebrow">{pickText(uiText.sidebarEyebrow, locale)}</p>
           <Link href="/" className="brand-link">
-            {siteMeta.title}
+            {pickText(siteMeta.title, locale)}
           </Link>
-          <p className="brand-copy">{siteMeta.tagline}</p>
+          <p className="brand-copy">{pickText(siteMeta.tagline, locale)}</p>
         </div>
 
         <nav className="nav-block" aria-label="Primary">
@@ -27,27 +38,27 @@ export function SiteShell({ children }: { children: ReactNode }) {
               href={item.href}
               className={pathname === item.href ? 'nav-link active' : 'nav-link'}
             >
-              {item.label}
+              {pickText(item.label, locale)}
             </Link>
           ))}
         </nav>
 
         <div className="sidebar-note card">
-          <p className="card-kicker">How to use this site</p>
-          <p>
-            Start with Architecture, then Modules, then follow one Reading Path.
-            Use search to jump straight to a subsystem or concept.
-          </p>
+          <p className="card-kicker">{pickText(uiText.sidebarHintTitle, locale)}</p>
+          <p>{pickText(uiText.sidebarHintBody, locale)}</p>
         </div>
       </aside>
 
       <div className="main-column">
         <header className="topbar">
-          <div>
-            <p className="eyebrow">Interactive Playbook</p>
-            <h1 className="topbar-title">Understand Claude Code from real code paths</h1>
+          <div className="topbar-copy">
+            <p className="eyebrow">{pickText(uiText.topbarEyebrow, locale)}</p>
+            <h1 className="topbar-title">{pickText(uiText.topbarTitle, locale)}</h1>
           </div>
-          <SearchPanel />
+          <div className="topbar-actions">
+            <ThemeLanguageControls />
+            <SearchPanel />
+          </div>
         </header>
         <main className="content">{children}</main>
       </div>

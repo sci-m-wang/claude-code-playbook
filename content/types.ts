@@ -1,57 +1,71 @@
+export type Locale = 'en' | 'zh'
+
+export type LocalizedText = {
+  en: string
+  zh: string
+}
+
 export type FileRef = {
   path: string
-  note?: string
+  note?: LocalizedText
 }
 
 export type ModuleCard = {
   slug: string
-  title: string
-  summary: string
-  role: string
-  inputs: string[]
-  outputs: string[]
-  learningValue: string[]
+  title: LocalizedText
+  summary: LocalizedText
+  role: LocalizedText
+  inputs: LocalizedText[]
+  outputs: LocalizedText[]
+  learningValue: LocalizedText[]
   firstRead: FileRef[]
   keyFiles: FileRef[]
 }
 
 export type FlowStep = {
-  title: string
-  summary: string
+  title: LocalizedText
+  summary: LocalizedText
   files: FileRef[]
 }
 
 export type FlowCard = {
   slug: string
-  title: string
-  summary: string
-  whyItMatters: string
+  title: LocalizedText
+  summary: LocalizedText
+  whyItMatters: LocalizedText
   steps: FlowStep[]
 }
 
 export type FeatureCard = {
-  title: string
-  summary: string
-  whyDifferent: string
-  tradeoffs: string[]
+  title: LocalizedText
+  summary: LocalizedText
+  whyDifferent: LocalizedText
+  tradeoffs: LocalizedText[]
   evidence: FileRef[]
 }
 
 export type ReadingTrack = {
   slug: string
-  title: string
-  audience: string
-  goal: string
+  title: LocalizedText
+  audience: LocalizedText
+  goal: LocalizedText
   steps: Array<{
-    title: string
+    title: LocalizedText
     files: FileRef[]
-    reason: string
+    reason: LocalizedText
   }>
 }
 
 export type GlossaryTerm = {
-  term: string
-  definition: string
-  whyItMatters: string
+  term: LocalizedText
+  definition: LocalizedText
+  whyItMatters: LocalizedText
   files: FileRef[]
+}
+
+export type TopFile = {
+  path: string
+  title: LocalizedText
+  why: LocalizedText
+  layer: LocalizedText
 }

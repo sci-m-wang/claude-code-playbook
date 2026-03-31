@@ -45,6 +45,7 @@ Important note: the public GitHub repo does not expose the full core CLI source 
 - `/flows` — execution chains and runtime walkthroughs
 - `/features` — notable design choices and tradeoffs
 - `/reading-paths` — guided source-reading routes
+- `/top-files` — top 20 source-file guide
 - `/glossary` — core terms and concepts
 - `/about` — analysis basis, snapshot metadata, tracked files
 
@@ -54,6 +55,8 @@ Important note: the public GitHub repo does not expose the full core CLI source 
 - React
 - TypeScript
 - static export for GitHub Pages
+- theme switching: auto / light / dark
+- bilingual UI and content: English / Chinese
 
 ## Local development
 
