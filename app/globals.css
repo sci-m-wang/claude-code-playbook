@@ -487,6 +487,20 @@ li,
   overflow: hidden;
 }
 
+.large-diagram-card {
+  padding: 18px 18px 8px;
+}
+
+.diagram-header-copy {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.large-diagram {
+  min-height: 620px;
+}
+
 .diagram-tabs-header {
   display: grid;
   gap: 10px;
@@ -502,6 +516,46 @@ li,
   fill: color-mix(in srgb, var(--panel-strong) 88%, transparent);
   stroke: var(--border);
   stroke-width: 1.2;
+}
+
+.drawio-group {
+  fill: color-mix(in srgb, var(--bg) 72%, transparent);
+  stroke: var(--border);
+  stroke-width: 1.2;
+  stroke-dasharray: 8 6;
+}
+
+.drawio-group-title {
+  fill: var(--muted);
+  font-size: 13px;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.drawio-box {
+  fill: color-mix(in srgb, var(--panel-strong) 90%, transparent);
+  stroke: var(--border);
+  stroke-width: 1.2;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.14));
+}
+
+.drawio-box.strong {
+  fill: url(#coreGlow);
+}
+
+.drawio-title {
+  fill: var(--text);
+  font-size: 15px;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 700;
+}
+
+.drawio-copy {
+  fill: var(--muted);
+  font-size: 12px;
+  font-family: var(--font-sans), sans-serif;
 }
 
 .diagram-node.strong {

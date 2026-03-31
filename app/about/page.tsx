@@ -30,7 +30,10 @@ export default function AboutPage() {
           <p className="card-kicker">{locale === 'en' ? 'Primary basis' : '主要依据'}</p>
           <h3>{sourceMetadata.snapshotLabel}</h3>
           <p>
-            {locale === 'en' ? 'Root' : '根目录'}: <code>{sourceMetadata.snapshotRoot}</code>
+            {locale === 'en' ? 'Root' : '根目录'}:{' '}
+            <a href={sourceMetadata.snapshotRoot} target="_blank" rel="noreferrer">
+              <code>{sourceMetadata.snapshotRoot}</code>
+            </a>
           </p>
           <p>{locale === 'en' ? 'Snapshot date' : '快照日期'}: {sourceMetadata.snapshotDate}</p>
         </article>

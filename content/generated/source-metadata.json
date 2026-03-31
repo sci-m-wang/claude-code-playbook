@@ -2,7 +2,7 @@
   "generatedAt": "2026-03-31T00:00:00.000Z",
   "snapshotLabel": "Local Claude Code app-source snapshot",
   "snapshotDate": "2026-03-31",
-  "snapshotRoot": "/Users/wangm/Projects/Claude Code/src",
+  "snapshotRoot": "https://github.com/sci-m-wang/claude-code",
   "publicRepo": {
     "url": "https://github.com/anthropics/claude-code",
     "commit": "4411cbae098222d6a43574b1c9d5931d897d0188",
