@@ -9,7 +9,7 @@ import { getArchitectureDiagramViews, t } from '@/content/site'
 
 export default function ArchitecturePage() {
   const { locale } = usePreferences()
-  const diagramViews = getArchitectureDiagramViews(locale)
+  const diagramViews = getArchitectureDiagramViews()
 
   return (
     <>

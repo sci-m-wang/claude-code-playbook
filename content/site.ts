@@ -1,4 +1,5 @@
 import type {
+  DiagramView,
   FeatureCard,
   FlowCard,
   GlossaryTerm,
@@ -77,6 +78,7 @@ export const uiText = {
   starterFiles: t('Starter picks', '新手优先'),
   runtimeFiles: t('Runtime picks', '运行时优先'),
   platformFiles: t('Platform picks', '平台方向'),
+  sourceAnchors: t('Source anchors', '源码锚点'),
 }
 
 export const architectureLayers = [
@@ -399,168 +401,120 @@ export const glossary: GlossaryTerm[] = [
 ]
 
 export const topFiles: TopFile[] = [
-  { path: 'src/entrypoints/cli.tsx', title: t('True bootstrap edge', '真正的启动边界'), why: t('Best first file for seeing runtime routing and fast paths.', '理解运行时路由与快速路径的最佳起点。'), layer: t('Bootstrap', '启动层'), tracks: ['starter'] },
-  { path: 'src/main.tsx', title: t('Main runtime entry', '主运行时入口'), why: t('Shows how full CLI mode is assembled.', '展示完整 CLI 模式如何被拼装出来。'), layer: t('Bootstrap', '启动层'), tracks: ['starter', 'runtime'] },
-  { path: 'src/entrypoints/init.ts', title: t('Initialization hub', '初始化枢纽'), why: t('Trust-safe env setup, telemetry, network prewarm, and shutdown logic live here.', '信任安全的环境处理、遥测、网络预热和关闭逻辑都在这里。'), layer: t('Bootstrap', '启动层'), tracks: ['starter', 'platform'] },
-  { path: 'src/replLauncher.tsx', title: t('Interactive handoff', '交互式启动交接'), why: t('Bridges runtime setup into the UI app.', '把运行时启动交接给 UI 应用。'), layer: t('UI', '界面层'), tracks: ['starter'] },
-  { path: 'src/screens/REPL.tsx', title: t('Main interactive surface', '主交互界面'), why: t('The center of the live user experience.', '这是实时用户体验的中心。'), layer: t('UI', '界面层'), tracks: ['starter', 'runtime'] },
-  { path: 'src/commands.ts', title: t('Command composition', '命令合成层'), why: t('Explains where slash commands really come from.', '解释斜杠命令究竟从哪里来。'), layer: t('Extensibility', '扩展层'), tracks: ['starter', 'platform'] },
-  { path: 'src/tools.ts', title: t('Tool registry', '工具注册表'), why: t('Maps the default tool surface and MCP merging.', '展示默认工具面与 MCP 合并方式。'), layer: t('Tool runtime', '工具运行时'), tracks: ['starter', 'runtime'] },
-  { path: 'src/Tool.ts', title: t('Core tool contract', '核心工具契约'), why: t('Defines the shape of tool execution context.', '定义工具执行上下文的结构。'), layer: t('Tool runtime', '工具运行时'), tracks: ['runtime'] },
-  { path: 'src/QueryEngine.ts', title: t('Headless engine wrapper', '无头引擎封装'), why: t('Best bridge between product usage and runtime internals.', '连接产品用法与运行时内部机制的最佳桥梁。'), layer: t('Query runtime', 'Query 运行时'), tracks: ['runtime'] },
-  { path: 'src/query.ts', title: t('Core query loop', '核心 query 循环'), why: t('The most important execution file in the whole app.', '全项目最重要的执行文件之一。'), layer: t('Query runtime', 'Query 运行时'), tracks: ['runtime'] },
-  { path: 'src/utils/processUserInput/processUserInput.ts', title: t('Input normalization', '输入标准化'), why: t('Shows how prompts, slash commands, and attachments unify.', '展示提示词、斜杠命令与附件如何统一进入运行时。'), layer: t('Input', '输入层'), tracks: ['runtime', 'starter'] },
-  { path: 'src/services/tools/toolOrchestration.ts', title: t('Concurrency-aware scheduling', '并发感知调度'), why: t('Key to understanding safe parallel tool execution.', '理解安全并行工具执行的关键文件。'), layer: t('Tool runtime', '工具运行时'), tracks: ['runtime'] },
-  { path: 'src/services/tools/StreamingToolExecutor.ts', title: t('Streaming tool executor', '流式工具执行器'), why: t('Shows how order and progress coexist.', '展示顺序性与进度流如何共存。'), layer: t('Tool runtime', '工具运行时'), tracks: ['runtime'] },
-  { path: 'src/services/tools/toolExecution.ts', title: t('Execution wrapper', '执行封装层'), why: t('Hooks, telemetry, and result shaping meet here.', 'hooks、遥测与结果整形都在这里汇合。'), layer: t('Tool runtime', '工具运行时'), tracks: ['runtime'] },
-  { path: 'src/utils/permissions/permissionSetup.ts', title: t('Permission context builder', '权限上下文构建器'), why: t('Shows how settings and flags become runtime permission state.', '展示设置与 CLI 标志如何变成运行时权限状态。'), layer: t('Policy', '策略层'), tracks: ['platform', 'runtime'] },
-  { path: 'src/utils/permissions/permissions.ts', title: t('Permission decision engine', '权限决策引擎'), why: t('Best file for understanding safety behavior.', '理解安全决策逻辑的最佳文件。'), layer: t('Policy', '策略层'), tracks: ['platform', 'runtime'] },
-  { path: 'src/utils/auth.ts', title: t('Multi-mode auth layer', '多模式鉴权层'), why: t('Shows how many auth paths Claude Code actually supports.', '展示 Claude Code 实际支持的鉴权路径之多。'), layer: t('Auth', '鉴权层'), tracks: ['platform'] },
-  { path: 'src/utils/config.ts', title: t('Config persistence core', '配置持久化核心'), why: t('Global and project config meet here.', '全局配置与项目配置在这里汇合。'), layer: t('Config', '配置层'), tracks: ['platform'] },
-  { path: 'src/utils/sessionStorage.ts', title: t('Durable transcript storage', '耐久会话存储'), why: t('Excellent case study in transcript durability.', '是学习对话耐久化设计的优秀案例。'), layer: t('Persistence', '持久化层'), tracks: ['runtime', 'platform'] },
-  { path: 'src/services/mcp/client.ts', title: t('MCP client implementation', 'MCP 客户端实现'), why: t('One of the most important files for extensibility and interoperability.', '研究扩展性与互操作性的关键文件。'), layer: t('MCP', 'MCP 层'), tracks: ['platform'] },
+  { order: 1, path: 'src/entrypoints/cli.tsx', title: t('True bootstrap edge', '真正的启动边界'), why: t('Best first file for seeing runtime routing and fast paths.', '理解运行时路由与快速路径的最佳起点。'), layer: t('Bootstrap', '启动层'), tracks: ['starter'], readingTime: t('8-10 min', '8-10 分钟') },
+  { order: 2, path: 'src/main.tsx', title: t('Main runtime entry', '主运行时入口'), why: t('Shows how full CLI mode is assembled.', '展示完整 CLI 模式如何被拼装出来。'), layer: t('Bootstrap', '启动层'), tracks: ['starter', 'runtime'], readingTime: t('15-20 min', '15-20 分钟') },
+  { order: 3, path: 'src/entrypoints/init.ts', title: t('Initialization hub', '初始化枢纽'), why: t('Trust-safe env setup, telemetry, network prewarm, and shutdown logic live here.', '信任安全的环境处理、遥测、网络预热和关闭逻辑都在这里。'), layer: t('Bootstrap', '启动层'), tracks: ['starter', 'platform'], readingTime: t('12-15 min', '12-15 分钟') },
+  { order: 4, path: 'src/replLauncher.tsx', title: t('Interactive handoff', '交互式启动交接'), why: t('Bridges runtime setup into the UI app.', '把运行时启动交接给 UI 应用。'), layer: t('UI', '界面层'), tracks: ['starter'], readingTime: t('5-8 min', '5-8 分钟') },
+  { order: 5, path: 'src/screens/REPL.tsx', title: t('Main interactive surface', '主交互界面'), why: t('The center of the live user experience.', '这是实时用户体验的中心。'), layer: t('UI', '界面层'), tracks: ['starter', 'runtime'], readingTime: t('20-30 min', '20-30 分钟') },
+  { order: 6, path: 'src/commands.ts', title: t('Command composition', '命令合成层'), why: t('Explains where slash commands really come from.', '解释斜杠命令究竟从哪里来。'), layer: t('Extensibility', '扩展层'), tracks: ['starter', 'platform'], readingTime: t('10-12 min', '10-12 分钟') },
+  { order: 7, path: 'src/tools.ts', title: t('Tool registry', '工具注册表'), why: t('Maps the default tool surface and MCP merging.', '展示默认工具面与 MCP 合并方式。'), layer: t('Tool runtime', '工具运行时'), tracks: ['starter', 'runtime'], readingTime: t('10-12 min', '10-12 分钟') },
+  { order: 8, path: 'src/Tool.ts', title: t('Core tool contract', '核心工具契约'), why: t('Defines the shape of tool execution context.', '定义工具执行上下文的结构。'), layer: t('Tool runtime', '工具运行时'), tracks: ['runtime'], readingTime: t('8-10 min', '8-10 分钟') },
+  { order: 9, path: 'src/QueryEngine.ts', title: t('Headless engine wrapper', '无头引擎封装'), why: t('Best bridge between product usage and runtime internals.', '连接产品用法与运行时内部机制的最佳桥梁。'), layer: t('Query runtime', 'Query 运行时'), tracks: ['runtime'], readingTime: t('15-18 min', '15-18 分钟') },
+  { order: 10, path: 'src/query.ts', title: t('Core query loop', '核心 query 循环'), why: t('The most important execution file in the whole app.', '全项目最重要的执行文件之一。'), layer: t('Query runtime', 'Query 运行时'), tracks: ['runtime'], readingTime: t('25-35 min', '25-35 分钟') },
+  { order: 11, path: 'src/utils/processUserInput/processUserInput.ts', title: t('Input normalization', '输入标准化'), why: t('Shows how prompts, slash commands, and attachments unify.', '展示提示词、斜杠命令与附件如何统一进入运行时。'), layer: t('Input', '输入层'), tracks: ['runtime', 'starter'], readingTime: t('10-12 min', '10-12 分钟') },
+  { order: 12, path: 'src/services/tools/toolOrchestration.ts', title: t('Concurrency-aware scheduling', '并发感知调度'), why: t('Key to understanding safe parallel tool execution.', '理解安全并行工具执行的关键文件。'), layer: t('Tool runtime', '工具运行时'), tracks: ['runtime'], readingTime: t('12-15 min', '12-15 分钟') },
+  { order: 13, path: 'src/services/tools/StreamingToolExecutor.ts', title: t('Streaming tool executor', '流式工具执行器'), why: t('Shows how order and progress coexist.', '展示顺序性与进度流如何共存。'), layer: t('Tool runtime', '工具运行时'), tracks: ['runtime'], readingTime: t('10-12 min', '10-12 分钟') },
+  { order: 14, path: 'src/services/tools/toolExecution.ts', title: t('Execution wrapper', '执行封装层'), why: t('Hooks, telemetry, and result shaping meet here.', 'hooks、遥测与结果整形都在这里汇合。'), layer: t('Tool runtime', '工具运行时'), tracks: ['runtime'], readingTime: t('12-16 min', '12-16 分钟') },
+  { order: 15, path: 'src/utils/permissions/permissionSetup.ts', title: t('Permission context builder', '权限上下文构建器'), why: t('Shows how settings and flags become runtime permission state.', '展示设置与 CLI 标志如何变成运行时权限状态。'), layer: t('Policy', '策略层'), tracks: ['platform', 'runtime'], readingTime: t('15-20 min', '15-20 分钟') },
+  { order: 16, path: 'src/utils/permissions/permissions.ts', title: t('Permission decision engine', '权限决策引擎'), why: t('Best file for understanding safety behavior.', '理解安全决策逻辑的最佳文件。'), layer: t('Policy', '策略层'), tracks: ['platform', 'runtime'], readingTime: t('20-25 min', '20-25 分钟') },
+  { order: 17, path: 'src/utils/auth.ts', title: t('Multi-mode auth layer', '多模式鉴权层'), why: t('Shows how many auth paths Claude Code actually supports.', '展示 Claude Code 实际支持的鉴权路径之多。'), layer: t('Auth', '鉴权层'), tracks: ['platform'], readingTime: t('20-25 min', '20-25 分钟') },
+  { order: 18, path: 'src/utils/config.ts', title: t('Config persistence core', '配置持久化核心'), why: t('Global and project config meet here.', '全局配置与项目配置在这里汇合。'), layer: t('Config', '配置层'), tracks: ['platform'], readingTime: t('18-22 min', '18-22 分钟') },
+  { order: 19, path: 'src/utils/sessionStorage.ts', title: t('Durable transcript storage', '耐久会话存储'), why: t('Excellent case study in transcript durability.', '是学习对话耐久化设计的优秀案例。'), layer: t('Persistence', '持久化层'), tracks: ['runtime', 'platform'], readingTime: t('18-24 min', '18-24 分钟') },
+  { order: 20, path: 'src/services/mcp/client.ts', title: t('MCP client implementation', 'MCP 客户端实现'), why: t('One of the most important files for extensibility and interoperability.', '研究扩展性与互操作性的关键文件。'), layer: t('MCP', 'MCP 层'), tracks: ['platform'], readingTime: t('30-40 min', '30-40 分钟') },
 ]
 
-export function getArchitectureDiagramViews(locale: Locale) {
-  const isZh = locale === 'zh'
+export function getArchitectureDiagramViews(): DiagramView[] {
   return [
     {
       slug: 'runtime-map',
-      title: isZh ? '运行时总图' : 'Runtime map',
-      description: isZh ? '从启动到 query 再到工具层的主结构。' : 'The primary runtime stack from bootstrap through query and tools.',
-      code: `flowchart LR
-  A[${isZh ? 'CLI / SDK / Remote 输入' : 'CLI / SDK / Remote Input'}] --> B[${isZh ? 'entrypoints/cli.tsx' : 'entrypoints/cli.tsx'}]
-  B --> C[${isZh ? 'main.tsx / init.ts' : 'main.tsx / init.ts'}]
-  C --> D[${isZh ? 'REPL 与 AppState' : 'REPL + AppState'}]
-  D --> E[${isZh ? 'processUserInput' : 'processUserInput'}]
-  E --> F[${isZh ? 'query.ts / QueryEngine' : 'query.ts / QueryEngine'}]
-  F --> G[${isZh ? 'toolOrchestration' : 'toolOrchestration'}]
-  G --> H[${isZh ? 'toolExecution / StreamingExecutor' : 'toolExecution / StreamingExecutor'}]
-  F --> I[${isZh ? 'sessionStorage' : 'sessionStorage'}]
-  H --> I
-`,
+      title: t('Runtime map', '运行时总图'),
+      description: t('The primary runtime stack from bootstrap through query and tools.', '从启动到 query 再到工具层的主结构。'),
+      imageSrc: '/diagrams/architecture-runtime.svg',
+      anchors: [
+        { title: t('Bootstrap edge', '启动边界'), summary: t('Start with the CLI bootstrap to understand mode routing and fast paths.', '从 CLI 启动边界入手，理解模式路由与快速路径。'), files: [{ path: 'src/entrypoints/cli.tsx' }, { path: 'src/main.tsx' }] },
+        { title: t('Turn entry', '回合入口'), summary: t('Input normalization is the transition from user intent to runtime work.', '输入标准化是从用户意图进入运行时工作的关键过渡。'), files: [{ path: 'src/utils/processUserInput/processUserInput.ts' }] },
+        { title: t('Core runtime', '核心运行时'), summary: t('The query loop and tool runtime are the system center of gravity.', 'query 循环与工具运行时是整个系统的重心。'), files: [{ path: 'src/query.ts' }, { path: 'src/services/tools/toolOrchestration.ts' }] },
+      ],
     },
     {
       slug: 'extension-map',
-      title: isZh ? '扩展能力图' : 'Extension map',
-      description: isZh ? 'commands、skills、plugins、MCP、LSP 如何汇入同一运行时。' : 'How commands, skills, plugins, MCP, and LSP converge into one runtime.',
-      code: `flowchart TD
-  A[${isZh ? 'commands.ts' : 'commands.ts'}]
-  B[${isZh ? 'skills/loadSkillsDir.ts' : 'skills/loadSkillsDir.ts'}]
-  C[${isZh ? 'pluginLoader.ts' : 'pluginLoader.ts'}]
-  D[${isZh ? 'mcp/config.ts' : 'mcp/config.ts'}]
-  E[${isZh ? 'mcp/client.ts' : 'mcp/client.ts'}]
-  F[${isZh ? 'LSP 服务' : 'LSP services'}]
-  G[${isZh ? '有效命令与工具面' : 'Effective command/tool surface'}]
-  B --> A
-  C --> A
-  C --> D
-  D --> E
-  E --> G
-  A --> G
-  F --> G
-`,
+      title: t('Extension map', '扩展能力图'),
+      description: t('How commands, skills, plugins, MCP, and LSP converge into one runtime.', 'commands、skills、plugins、MCP、LSP 如何汇入同一运行时。'),
+      imageSrc: '/diagrams/architecture-extension.svg',
+      anchors: [
+        { title: t('Command composition', '命令合成'), summary: t('Commands are not only built-ins; they are assembled from multiple extension channels.', '命令并不只有内置来源，而是由多条扩展链共同组装。'), files: [{ path: 'src/commands.ts' }] },
+        { title: t('Plugin loading', '插件加载'), summary: t('Plugins widen the runtime by contributing commands, skills, hooks, MCP, and more.', '插件通过 commands、skills、hooks、MCP 等方式扩展运行时。'), files: [{ path: 'src/utils/plugins/pluginLoader.ts' }] },
+        { title: t('MCP bridge', 'MCP 桥接层'), summary: t('MCP config and client logic translate external tool ecosystems into native runtime capabilities.', 'MCP 配置与客户端逻辑把外部工具生态翻译成运行时能力。'), files: [{ path: 'src/services/mcp/config.ts' }, { path: 'src/services/mcp/client.ts' }] },
+      ],
     },
     {
       slug: 'safety-map',
-      title: isZh ? '安全与治理图' : 'Safety & governance',
-      description: isZh ? '设置、策略、权限与鉴权如何包裹自动化能力。' : 'How settings, policy, permissions, and auth wrap autonomous behavior.',
-      code: `flowchart LR
-  A[${isZh ? 'settings.ts' : 'settings.ts'}] --> B[${isZh ? 'permissionSetup.ts' : 'permissionSetup.ts'}]
-  C[${isZh ? 'CLI flags' : 'CLI flags'}] --> B
-  D[${isZh ? 'managed policy' : 'managed policy'}] --> B
-  B --> E[${isZh ? 'permissions.ts' : 'permissions.ts'}]
-  F[${isZh ? 'auth.ts' : 'auth.ts'}] --> E
-  E --> G[${isZh ? '工具可执行性' : 'Tool executability'}]
-  E --> H[${isZh ? '提示 / 拒绝 / 自动放行' : 'Prompt / deny / auto-allow'}]
-`,
+      title: t('Safety & governance', '安全与治理图'),
+      description: t('How settings, policy, permissions, and auth wrap autonomous behavior.', '设置、策略、权限与鉴权如何包裹自动化能力。'),
+      imageSrc: '/diagrams/architecture-safety.svg',
+      anchors: [
+        { title: t('Settings layering', '设置分层'), summary: t('Managed policy, project config, and CLI flags are merged before decisions are made.', '托管策略、项目配置与 CLI 标志会在决策前被统一合并。'), files: [{ path: 'src/utils/settings/settings.ts' }, { path: 'src/utils/permissions/permissionSetup.ts' }] },
+        { title: t('Decision engine', '决策引擎'), summary: t('Permission behavior is determined by a dedicated engine rather than scattered checks.', '权限行为由专门引擎决定，而不是分散的 if 判断。'), files: [{ path: 'src/utils/permissions/permissions.ts' }] },
+        { title: t('Auth influence', '鉴权影响面'), summary: t('Auth mode and provider state influence what operations are viable at runtime.', '鉴权模式与 provider 状态会影响运行时可执行的能力。'), files: [{ path: 'src/utils/auth.ts' }] },
+      ],
     },
     {
       slug: 'remote-map',
-      title: isZh ? '远程与桥接图' : 'Remote & bridge',
-      description: isZh ? '本地运行时、远程会话和 bridge 控制链的关系。' : 'The relationship between local runtime, remote sessions, and bridge control paths.',
-      code: `flowchart LR
-  A[${isZh ? '本地 Claude Code' : 'Local Claude Code'}] --> B[${isZh ? 'RemoteSessionManager' : 'RemoteSessionManager'}]
-  B --> C[${isZh ? 'SessionsWebSocket' : 'SessionsWebSocket'}]
-  B --> D[${isZh ? 'sessionIngress / HTTP' : 'sessionIngress / HTTP'}]
-  A --> E[${isZh ? 'bridgeMain.ts' : 'bridgeMain.ts'}]
-  E --> F[${isZh ? '远程控制入口' : 'Remote-control entrypoints'}]
-  F --> G[${isZh ? 'direct connect session' : 'direct connect session'}]
-  A --> H[${isZh ? 'teamMemorySync' : 'teamMemorySync'}]
-`,
+      title: t('Remote & bridge', '远程与桥接图'),
+      description: t('The relationship between local runtime, remote sessions, and bridge control paths.', '本地运行时、远程会话和 bridge 控制链的关系。'),
+      imageSrc: '/diagrams/architecture-remote.svg',
+      anchors: [
+        { title: t('Session manager', '会话管理器'), summary: t('Remote session state is coordinated through a dedicated manager and transport layer.', '远程会话状态通过专门的管理器与传输层协调。'), files: [{ path: 'src/remote/RemoteSessionManager.ts' }, { path: 'src/remote/SessionsWebSocket.ts' }] },
+        { title: t('Bridge control path', '桥接控制链'), summary: t('Bridge mode exposes the local environment as a remotely controlled execution target.', 'bridge 模式把本地环境暴露为一个可远程控制的执行目标。'), files: [{ path: 'src/bridge/bridgeMain.ts' }, { path: 'src/server/createDirectConnectSession.ts' }] },
+        { title: t('Team-state side channel', '团队状态旁路'), summary: t('Team memory sync shows that remote collaboration is a first-class concern.', 'team memory sync 说明团队协作状态也是一等关注点。'), files: [{ path: 'src/services/teamMemorySync/index.ts' }] },
+      ],
     },
   ]
 }
 
-export function getFlowDiagramViews(locale: Locale) {
-  const isZh = locale === 'zh'
+export function getFlowDiagramViews(): DiagramView[] {
   return [
     {
       slug: 'turn-sequence',
-      title: isZh ? '交互回合时序图' : 'Interactive turn sequence',
-      description: isZh ? '一次用户输入如何穿过 REPL、query、tool、storage。' : 'How one user turn moves through REPL, query, tools, and storage.',
-      code: `sequenceDiagram
-  participant U as ${isZh ? '用户' : 'User'}
-  participant R as REPL
-  participant P as ${isZh ? '输入处理' : 'Input Processing'}
-  participant Q as ${isZh ? 'Query Loop' : 'Query Loop'}
-  participant T as ${isZh ? '工具运行时' : 'Tool Runtime'}
-  participant S as ${isZh ? '会话存储' : 'Session Storage'}
-  U->>R: ${isZh ? '输入 prompt' : 'prompt'}
-  R->>P: ${isZh ? '标准化输入' : 'normalize input'}
-  P->>Q: ${isZh ? '交给 query' : 'submit turn'}
-  Q-->>R: ${isZh ? '流式文本' : 'stream text'}
-  Q->>T: ${isZh ? '派发工具调用' : 'dispatch tool calls'}
-  T-->>Q: ${isZh ? '工具结果' : 'tool results'}
-  Q->>S: ${isZh ? '写入转录' : 'persist transcript'}
-  Q-->>R: ${isZh ? '增量更新界面' : 'render incremental updates'}
-`,
+      title: t('Interactive turn sequence', '交互回合时序图'),
+      description: t('How one user turn moves through REPL, query, tools, and storage.', '一次用户输入如何穿过 REPL、query、tool、storage。'),
+      imageSrc: '/diagrams/flow-turn.svg',
+      anchors: [
+        { title: t('Prompt ingestion', '提示词进入系统'), summary: t('The REPL and input processor turn free-form user actions into structured runtime work.', 'REPL 与输入处理层会把自由形式的用户动作变成结构化运行时任务。'), files: [{ path: 'src/screens/REPL.tsx' }, { path: 'src/utils/processUserInput/processUserInput.ts' }] },
+        { title: t('Query phase', 'Query 阶段'), summary: t('The query loop coordinates model streaming, tool emission, and transcript updates.', 'query 循环统一协调模型流式输出、工具产生与转录更新。'), files: [{ path: 'src/query.ts' }, { path: 'src/QueryEngine.ts' }] },
+        { title: t('Persistence handoff', '持久化交接'), summary: t('Transcript durability is a visible part of the normal turn lifecycle.', '转录持久化是一次正常回合生命周期中的显式组成部分。'), files: [{ path: 'src/utils/sessionStorage.ts' }] },
+      ],
     },
     {
       slug: 'tool-scheduling',
-      title: isZh ? '工具调度图' : 'Tool scheduling',
-      description: isZh ? '工具调用如何被分成可并发与必须串行的批次。' : 'How tool calls are partitioned into concurrency-safe and serial batches.',
-      code: `flowchart TD
-  A[${isZh ? '模型产生 tool_use' : 'Model emits tool_use'}] --> B[${isZh ? 'toolOrchestration' : 'toolOrchestration'}]
-  B --> C{${isZh ? '可并发？' : 'Concurrency-safe?'}}
-  C -->|${isZh ? '是' : 'yes'}| D[${isZh ? '并行批次' : 'parallel batch'}]
-  C -->|${isZh ? '否' : 'no'}| E[${isZh ? '串行批次' : 'serial batch'}]
-  D --> F[${isZh ? 'StreamingToolExecutor' : 'StreamingToolExecutor'}]
-  E --> F
-  F --> G[${isZh ? 'toolExecution' : 'toolExecution'}]
-  G --> H[${isZh ? '结果整形与通知' : 'result shaping + notifications'}]
-`,
+      title: t('Tool scheduling', '工具调度图'),
+      description: t('How tool calls are partitioned into concurrency-safe and serial batches.', '工具调用如何被分成可并发与必须串行的批次。'),
+      imageSrc: '/diagrams/flow-tools.svg',
+      anchors: [
+        { title: t('Scheduling gate', '调度门'), summary: t('Claude Code reasons explicitly about whether tools can run together.', 'Claude Code 会显式判断工具是否可以并行运行。'), files: [{ path: 'src/services/tools/toolOrchestration.ts' }] },
+        { title: t('Streaming executor', '流式执行器'), summary: t('Streaming execution keeps progress responsive without losing order.', '流式执行器在保持响应性的同时避免顺序失控。'), files: [{ path: 'src/services/tools/StreamingToolExecutor.ts' }] },
+        { title: t('Execution wrapper', '执行封装'), summary: t('Hooks, telemetry, and result shaping are all part of the final tool boundary.', 'hooks、遥测与结果整理都属于最终的工具边界。'), files: [{ path: 'src/services/tools/toolExecution.ts' }] },
+      ],
     },
     {
       slug: 'permission-resolution',
-      title: isZh ? '权限决策图' : 'Permission resolution',
-      description: isZh ? '设置、模式和工具请求如何汇合成最终权限决策。' : 'How settings, mode, and tool requests converge into a permission decision.',
-      code: `flowchart LR
-  A[${isZh ? 'settings.ts' : 'settings.ts'}] --> D[${isZh ? 'permissionSetup.ts' : 'permissionSetup.ts'}]
-  B[${isZh ? 'project config' : 'project config'}] --> D
-  C[${isZh ? 'CLI flags' : 'CLI flags'}] --> D
-  D --> E[${isZh ? 'permissions.ts' : 'permissions.ts'}]
-  F[${isZh ? 'tool metadata' : 'tool metadata'}] --> E
-  E --> G{${isZh ? '允许 / 询问 / 拒绝' : 'allow / ask / deny'}}
-`,
+      title: t('Permission resolution', '权限决策图'),
+      description: t('How settings, mode, and tool requests converge into a permission decision.', '设置、模式和工具请求如何汇合成最终权限决策。'),
+      imageSrc: '/diagrams/flow-permissions.svg',
+      anchors: [
+        { title: t('Settings merge', '设置合并'), summary: t('Managed, project, and local settings are merged before runtime behavior is chosen.', '托管、项目与本地设置会先合并，再决定运行时行为。'), files: [{ path: 'src/utils/settings/settings.ts' }, { path: 'src/utils/permissions/permissionSetup.ts' }] },
+        { title: t('Tool-risk classification', '工具风险分类'), summary: t('Permissions depend not only on mode, but also on what kind of tool operation is being attempted.', '权限不仅取决于模式，也取决于工具操作本身的风险类型。'), files: [{ path: 'src/utils/permissions/permissions.ts' }, { path: 'src/tools/BashTool/bashPermissions.ts' }] },
+      ],
     },
     {
       slug: 'remote-session',
-      title: isZh ? '远程会话链路图' : 'Remote session path',
-      description: isZh ? '远程控制请求如何进入本地执行环境。' : 'How remote control requests enter the local execution environment.',
-      code: `sequenceDiagram
-  participant UI as ${isZh ? '本地 UI' : 'Local UI'}
-  participant RM as RemoteSessionManager
-  participant WS as SessionsWebSocket
-  participant BR as bridgeMain
-  participant EX as ${isZh ? '执行环境' : 'Execution environment'}
-  UI->>RM: ${isZh ? '连接远程会话' : 'connect remote session'}
-  RM->>WS: ${isZh ? '建立事件通道' : 'open event transport'}
-  WS-->>RM: ${isZh ? '远程状态与事件' : 'remote state + events'}
-  UI->>BR: ${isZh ? '发起 bridge/控制请求' : 'issue bridge/control request'}
-  BR->>EX: ${isZh ? '执行本地能力' : 'execute local capabilities'}
-  EX-->>UI: ${isZh ? '返回结果与权限反馈' : 'return results + permission responses'}
-`,
+      title: t('Remote session path', '远程会话链路图'),
+      description: t('How remote control requests enter the local execution environment.', '远程控制请求如何进入本地执行环境。'),
+      imageSrc: '/diagrams/flow-remote.svg',
+      anchors: [
+        { title: t('Session transport', '会话传输层'), summary: t('Remote session state travels through a dedicated session manager and websocket transport.', '远程会话状态通过专门的 session manager 与 websocket transport 传输。'), files: [{ path: 'src/remote/RemoteSessionManager.ts' }, { path: 'src/remote/SessionsWebSocket.ts' }] },
+        { title: t('Execution bridge', '执行桥'), summary: t('Bridge mode turns a local environment into something a remote surface can control.', 'bridge 模式把本地环境变成可被远程界面控制的对象。'), files: [{ path: 'src/bridge/bridgeMain.ts' }] },
+      ],
     },
   ]
 }

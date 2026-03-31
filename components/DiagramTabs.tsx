@@ -1,16 +1,11 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
-import { MermaidDiagram } from '@/components/MermaidDiagram'
+import type { DiagramView } from '@/content/types'
 import { pickText, uiText } from '@/content/site'
+import { FileList } from '@/components/FileList'
 import { usePreferences } from '@/components/PreferencesProvider'
-
-type DiagramView = {
-  slug: string
-  title: string
-  description: string
-  code: string
-}
 
 export function DiagramTabs({ views }: { views: DiagramView[] }) {
   const [active, setActive] = useState(views[0]?.slug)
@@ -28,15 +23,35 @@ export function DiagramTabs({ views }: { views: DiagramView[] }) {
               className={view.slug === active ? 'flow-tab active' : 'flow-tab'}
               onClick={() => setActive(view.slug)}
             >
-              {view.title}
+              {pickText(view.title, locale)}
             </button>
           ))}
         </div>
       </div>
       <div className="diagram-card card">
-        <h3>{current.title}</h3>
-        <p>{current.description}</p>
-        <MermaidDiagram code={current.code} />
+        <h3>{pickText(current.title, locale)}</h3>
+        <p>{pickText(current.description, locale)}</p>
+        <div className="graphviz-frame">
+          <Image
+            src={current.imageSrc}
+            alt={pickText(current.title, locale)}
+            width={1400}
+            height={900}
+            className="graphviz-image"
+          />
+        </div>
+        <div>
+          <p className="eyebrow">{pickText(uiText.sourceAnchors, locale)}</p>
+          <div className="anchor-grid">
+            {current.anchors.map(anchor => (
+              <article className="anchor-card" key={anchor.title.en}>
+                <h4>{pickText(anchor.title, locale)}</h4>
+                <p>{pickText(anchor.summary, locale)}</p>
+                <FileList items={anchor.files} />
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )

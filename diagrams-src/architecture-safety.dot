@@ -1,0 +1,22 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="transparent", pad=0.3, nodesep=0.45, ranksep=0.8, splines=ortho]
+  node [shape=rect, style="rounded,filled", fontname="Helvetica", fontsize=13, color="#4fc3ff", fillcolor="#11243c", fontcolor="#e7eefb", margin="0.18,0.12"]
+  edge [color="#7bbcff", penwidth=1.7, arrowsize=0.8]
+
+  settings [label="settings.ts"]
+  managed [label="Managed policy"]
+  flags [label="CLI flags"]
+  setup [label="permissionSetup.ts", fillcolor="#14344f"]
+  decision [label="permissions.ts", fillcolor="#14344f"]
+  auth [label="auth.ts"]
+  toolreq [label="Tool metadata"]
+  outcomes [label="Allow / Ask / Deny"]
+
+  settings -> setup
+  managed -> setup
+  flags -> setup
+  setup -> decision
+  auth -> decision
+  toolreq -> decision
+  decision -> outcomes
+}

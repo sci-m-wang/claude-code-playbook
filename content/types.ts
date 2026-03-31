@@ -69,4 +69,20 @@ export type TopFile = {
   why: LocalizedText
   layer: LocalizedText
   tracks: Array<'starter' | 'runtime' | 'platform'>
+  order: number
+  readingTime: LocalizedText
+}
+
+export type DiagramAnchor = {
+  title: LocalizedText
+  summary: LocalizedText
+  files: FileRef[]
+}
+
+export type DiagramView = {
+  slug: string
+  title: LocalizedText
+  description: LocalizedText
+  imageSrc: string
+  anchors: DiagramAnchor[]
 }

@@ -1,4 +1,4 @@
- 'use client'
+'use client'
 
 import { FlowExplorer } from '@/components/FlowExplorer'
 import { DiagramTabs } from '@/components/DiagramTabs'
@@ -9,7 +9,7 @@ import { usePreferences } from '@/components/PreferencesProvider'
 
 export default function FlowsPage() {
   const { locale } = usePreferences()
-  const diagramViews = getFlowDiagramViews(locale)
+  const diagramViews = getFlowDiagramViews()
 
   return (
     <>

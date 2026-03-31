@@ -1,0 +1,17 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="transparent", pad=0.3, nodesep=0.45, ranksep=0.8, splines=ortho]
+  node [shape=rect, style="rounded,filled", fontname="Helvetica", fontsize=13, color="#4fc3ff", fillcolor="#11243c", fontcolor="#e7eefb", margin="0.18,0.12"]
+  edge [color="#7bbcff", penwidth=1.7, arrowsize=0.8]
+
+  user [label="User prompt"]
+  repl [label="REPL"]
+  input [label="processUserInput.ts"]
+  query [label="query.ts", fillcolor="#14344f"]
+  tools [label="tool runtime"]
+  storage [label="sessionStorage.ts"]
+  ui [label="Incremental UI updates"]
+
+  user -> repl -> input -> query -> tools -> storage
+  query -> ui
+  storage -> ui
+}

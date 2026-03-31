@@ -1,0 +1,21 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad=0.3, nodesep=0.45, ranksep=0.8, splines=ortho]
+  node [shape=rect, style="rounded,filled", fontname="Helvetica", fontsize=13, color="#4fc3ff", fillcolor="#11243c", fontcolor="#e7eefb", margin="0.18,0.12"]
+  edge [color="#7bbcff", penwidth=1.7, arrowsize=0.8]
+
+  model [label="Model emits tool_use"]
+  orch [label="toolOrchestration.ts", fillcolor="#14344f"]
+  split [label="Parallel-safe?", shape=diamond, fillcolor="#17314a"]
+  parallel [label="Parallel batch"]
+  serial [label="Serial batch"]
+  streaming [label="StreamingToolExecutor.ts"]
+  exec [label="toolExecution.ts", fillcolor="#14344f"]
+  result [label="Result shaping + notifications"]
+
+  model -> orch -> split
+  split -> parallel
+  split -> serial
+  parallel -> streaming
+  serial -> streaming
+  streaming -> exec -> result
+}

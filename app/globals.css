@@ -538,9 +538,31 @@ li,
   padding-top: 8px;
 }
 
-.mermaid-wrap svg {
+.mermaid-wrap svg,
+.graphviz-image {
   max-width: 100%;
   height: auto;
+}
+
+.graphviz-frame {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+}
+
+.anchor-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 12px;
+}
+
+.anchor-card {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
 }
 
 .footer-note {
@@ -571,7 +593,8 @@ li,
   .three-up,
   .timeline,
   .detail-grid,
-  .visual-grid {
+  .visual-grid,
+  .anchor-grid {
     grid-template-columns: 1fr;
   }
 }

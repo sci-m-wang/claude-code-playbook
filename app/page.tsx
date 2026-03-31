@@ -154,6 +154,24 @@ export default function HomePage() {
           <p>{locale === 'en' ? 'Choose a route by experience level or technical interest.' : '按经验层级或技术兴趣选择阅读路线。'}</p>
         </article>
       </section>
+
+      <section className="three-up">
+        <article className="card">
+          <p className="card-kicker">{locale === 'en' ? '30-minute route' : '30 分钟速读路线'}</p>
+          <h3>{locale === 'en' ? 'Build the mental model fast' : '先建立整体心智模型'}</h3>
+          <p>{locale === 'en' ? 'Read `cli.tsx` → `main.tsx` → `commands.ts` → `tools.ts` → Architecture page diagrams.' : '建议阅读 `cli.tsx` → `main.tsx` → `commands.ts` → `tools.ts`，再配合架构页图示建立整体认知。'}</p>
+        </article>
+        <article className="card">
+          <p className="card-kicker">{locale === 'en' ? '2-hour route' : '2 小时深入路线'}</p>
+          <h3>{locale === 'en' ? 'Understand execution deeply' : '深入理解执行系统'}</h3>
+          <p>{locale === 'en' ? 'Follow `processUserInput.ts` → `query.ts` → `QueryEngine.ts` → tool orchestration files → session storage.' : '建议顺着 `processUserInput.ts` → `query.ts` → `QueryEngine.ts` → 工具调度相关文件 → session storage 深入。'}</p>
+        </article>
+        <article className="card">
+          <p className="card-kicker">{locale === 'en' ? 'Platform route' : '平台路线'}</p>
+          <h3>{locale === 'en' ? 'Study extensibility and governance' : '研究扩展与治理能力'}</h3>
+          <p>{locale === 'en' ? 'Focus on permissions, auth, config, plugin loading, and MCP client logic.' : '重点看 permissions、auth、config、plugin loading 和 MCP client 逻辑。'}</p>
+        </article>
+      </section>
     </>
   )
 }

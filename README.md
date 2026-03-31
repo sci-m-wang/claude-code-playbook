@@ -57,7 +57,7 @@ Important note: the public GitHub repo does not expose the full core CLI source 
 - static export for GitHub Pages
 - theme switching: auto / light / dark
 - bilingual UI and content: English / Chinese
-- richer diagrams with SVG + Mermaid views
+- richer diagrams with Graphviz-generated SVG views
 
 ## Local development
 
@@ -71,10 +71,13 @@ Then open `http://localhost:3000`.
 ## Production build
 
 ```bash
+npm run diagrams:build
 npm run build
 ```
 
 Static output is generated in `out/`.
+
+Graphviz source files live in `diagrams-src/` and generated SVG assets are written to `public/diagrams/`.
 
 ## Updating the Claude Code analysis
 

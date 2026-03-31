@@ -1,0 +1,20 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="transparent", pad=0.3, nodesep=0.45, ranksep=0.8, splines=ortho]
+  node [shape=rect, style="rounded,filled", fontname="Helvetica", fontsize=13, color="#4fc3ff", fillcolor="#11243c", fontcolor="#e7eefb", margin="0.18,0.12"]
+  edge [color="#7bbcff", penwidth=1.7, arrowsize=0.8]
+
+  local [label="Local Claude Code"]
+  manager [label="RemoteSessionManager.ts", fillcolor="#14344f"]
+  ws [label="SessionsWebSocket.ts"]
+  ingress [label="sessionIngress.ts"]
+  bridge [label="bridgeMain.ts", fillcolor="#14344f"]
+  direct [label="createDirectConnectSession.ts"]
+  memory [label="teamMemorySync"]
+
+  local -> manager
+  manager -> ws
+  manager -> ingress
+  local -> bridge
+  bridge -> direct
+  local -> memory
+}

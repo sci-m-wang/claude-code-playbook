@@ -1,0 +1,20 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="transparent", pad=0.3, nodesep=0.5, ranksep=0.8, splines=ortho]
+  node [shape=rect, style="rounded,filled", fontname="Helvetica", fontsize=13, color="#4fc3ff", fillcolor="#11243c", fontcolor="#e7eefb", margin="0.18,0.12"]
+  edge [color="#7bbcff", penwidth=1.7, arrowsize=0.8]
+
+  input [label="CLI / SDK / Remote input"]
+  boot [label="Bootstrap\nentrypoints/cli.tsx\nmain.tsx\ninit.ts"]
+  repl [label="Interactive surface\nREPL + AppState"]
+  normalize [label="Input normalization\nprocessUserInput.ts"]
+  query [label="Query runtime\nquery.ts + QueryEngine.ts", fillcolor="#14344f"]
+  tools [label="Tool orchestration\ntoolOrchestration.ts\nStreamingToolExecutor.ts"]
+  persist [label="Persistence\nsessionStorage.ts"]
+  policy [label="Policy / auth / config"]
+
+  input -> boot -> repl -> normalize -> query -> tools
+  query -> persist
+  tools -> persist
+  policy -> query
+  policy -> tools
+}

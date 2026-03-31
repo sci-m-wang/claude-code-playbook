@@ -1,0 +1,23 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad=0.3, nodesep=0.45, ranksep=0.8, splines=ortho]
+  node [shape=rect, style="rounded,filled", fontname="Helvetica", fontsize=13, color="#4fc3ff", fillcolor="#11243c", fontcolor="#e7eefb", margin="0.18,0.12"]
+  edge [color="#7bbcff", penwidth=1.7, arrowsize=0.8]
+
+  skills [label="Skills\nloadSkillsDir.ts"]
+  plugins [label="Plugins\npluginLoader.ts"]
+  commands [label="Commands\ncommands.ts", fillcolor="#14344f"]
+  mcpconfig [label="MCP config\nconfig.ts"]
+  mcpclient [label="MCP client\nclient.ts"]
+  lsp [label="LSP services"]
+  tools [label="Tool surface\ntools.ts", fillcolor="#14344f"]
+  runtime [label="Effective runtime surface"]
+
+  skills -> commands
+  plugins -> commands
+  plugins -> mcpconfig
+  mcpconfig -> mcpclient
+  mcpclient -> tools
+  commands -> runtime
+  tools -> runtime
+  lsp -> runtime
+}

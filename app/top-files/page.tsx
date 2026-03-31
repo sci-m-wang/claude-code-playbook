@@ -58,11 +58,17 @@ export default function TopFilesPage() {
               <code>{file.path}</code>
             </h3>
             <p>
+              <strong>{locale === 'en' ? 'Suggested order' : '建议顺序'}:</strong> {file.order}
+            </p>
+            <p>
               <strong>{pickText(file.title, locale)}</strong>
             </p>
             <p>{pickText(file.why, locale)}</p>
             <p>
               <strong>{locale === 'en' ? 'Layer' : '所在层'}:</strong> {pickText(file.layer, locale)}
+            </p>
+            <p>
+              <strong>{locale === 'en' ? 'Reading time' : '预计时长'}:</strong> {pickText(file.readingTime, locale)}
             </p>
             <p>
               <strong>{locale === 'en' ? 'Track fit' : '适合路径'}:</strong>{' '}
