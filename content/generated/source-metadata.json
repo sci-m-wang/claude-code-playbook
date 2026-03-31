@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-03-31T00:00:00.000Z",
+  "snapshotLabel": "Local Claude Code app-source snapshot",
+  "snapshotDate": "2026-03-31",
+  "snapshotRoot": "/Users/wangm/Projects/Claude Code/src",
+  "publicRepo": {
+    "url": "https://github.com/anthropics/claude-code",
+    "commit": "4411cbae098222d6a43574b1c9d5931d897d0188",
+    "commitDate": "2026-03-31T12:36:59+01:00",
+    "note": "Public repo is primarily plugin/examples/automation material rather than the full core CLI source."
+  },
+  "trackedFiles": [
+    { "path": "src/main.tsx", "lines": 4684 },
+    { "path": "src/services/api/claude.ts", "lines": 3420 },
+    { "path": "src/services/mcp/client.ts", "lines": 3349 },
+    { "path": "src/utils/auth.ts", "lines": 2003 },
+    { "path": "src/utils/config.ts", "lines": 1818 },
+    { "path": "src/utils/plugins/pluginLoader.ts", "lines": 3303 }
+  ]
+}

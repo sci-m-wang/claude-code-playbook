@@ -1,0 +1,8 @@
+.next
+node_modules
+out
+.wrangler
+.npm-cache
+dist
+coverage
+*.log
