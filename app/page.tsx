@@ -34,8 +34,8 @@ export default function HomePage() {
             <p className="card-kicker">Step 3</p>
             <h3>Automated delivery</h3>
             <p>
-              Export a static Next.js site and deploy to Cloudflare Pages from GitHub with an
-              idempotent project-creation step.
+              Export a static Next.js site and deploy it automatically to GitHub Pages from the
+              repository workflow.
             </p>
           </article>
         </div>
