@@ -160,16 +160,19 @@ export default function HomePage() {
           <p className="card-kicker">{locale === 'en' ? '30-minute route' : '30 分钟速读路线'}</p>
           <h3>{locale === 'en' ? 'Build the mental model fast' : '先建立整体心智模型'}</h3>
           <p>{locale === 'en' ? 'Read `cli.tsx` → `main.tsx` → `commands.ts` → `tools.ts` → Architecture page diagrams.' : '建议阅读 `cli.tsx` → `main.tsx` → `commands.ts` → `tools.ts`，再配合架构页图示建立整体认知。'}</p>
+          <p>{locale === 'en' ? 'Outcome: you understand the runtime shape, capability surface, and why Claude Code is more platform than chat CLI.' : '收获：你会理解它的运行时形态、能力面，以及为什么它更像平台而不是聊天 CLI。'}</p>
         </article>
         <article className="card">
           <p className="card-kicker">{locale === 'en' ? '2-hour route' : '2 小时深入路线'}</p>
           <h3>{locale === 'en' ? 'Understand execution deeply' : '深入理解执行系统'}</h3>
           <p>{locale === 'en' ? 'Follow `processUserInput.ts` → `query.ts` → `QueryEngine.ts` → tool orchestration files → session storage.' : '建议顺着 `processUserInput.ts` → `query.ts` → `QueryEngine.ts` → 工具调度相关文件 → session storage 深入。'}</p>
+          <p>{locale === 'en' ? 'Outcome: you can explain how a prompt becomes streamed output, tool effects, and durable transcript state.' : '收获：你将能解释一条 prompt 如何变成流式输出、工具副作用以及耐久化会话状态。'}</p>
         </article>
         <article className="card">
           <p className="card-kicker">{locale === 'en' ? 'Platform route' : '平台路线'}</p>
           <h3>{locale === 'en' ? 'Study extensibility and governance' : '研究扩展与治理能力'}</h3>
           <p>{locale === 'en' ? 'Focus on permissions, auth, config, plugin loading, and MCP client logic.' : '重点看 permissions、auth、config、plugin loading 和 MCP client 逻辑。'}</p>
+          <p>{locale === 'en' ? 'Outcome: you will see how Claude Code grows from product into platform and how safety is layered into that growth.' : '收获：你会看见 Claude Code 如何从产品演进为平台，以及安全治理如何嵌入其中。'}</p>
         </article>
       </section>
     </>

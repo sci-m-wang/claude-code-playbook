@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { pickText, uiText } from '@/content/site'
 import type { ModuleCard } from '@/content/types'
 import { FileList } from '@/components/FileList'
@@ -10,13 +10,39 @@ export function AccordionList({ items }: { items: ModuleCard[] }) {
   const [openSlug, setOpenSlug] = useState(items[0]?.slug)
   const { locale } = usePreferences()
 
+  useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash.replace('#', '')
+      if (!hash) return
+      const exists = items.some(item => item.slug === hash)
+      if (!exists) return
+      setOpenSlug(hash)
+      requestAnimationFrame(() => {
+        document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    }
+
+    syncFromHash()
+    window.addEventListener('hashchange', syncFromHash)
+    return () => window.removeEventListener('hashchange', syncFromHash)
+  }, [items])
+
   return (
     <div className="accordion-list">
       {items.map(item => {
         const open = item.slug === openSlug
         return (
-          <section className={open ? 'accordion-item open' : 'accordion-item'} key={item.slug}>
-            <button className="accordion-trigger" onClick={() => setOpenSlug(open ? '' : item.slug)}>
+          <section className={open ? 'accordion-item open' : 'accordion-item'} key={item.slug} id={item.slug}>
+            <button
+              className="accordion-trigger"
+              onClick={() => {
+                const next = open ? '' : item.slug
+                setOpenSlug(next)
+                if (next) {
+                  window.history.replaceState(null, '', `#${next}`)
+                }
+              }}
+            >
               <span>
                 <span className="eyebrow">{locale === 'en' ? 'Module' : '模块'}</span>
                 <strong>{pickText(item.title, locale)}</strong>

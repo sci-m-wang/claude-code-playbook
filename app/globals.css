@@ -501,6 +501,13 @@ li,
   min-height: 620px;
 }
 
+.system-panorama {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 320px;
+  gap: 16px;
+  align-items: start;
+}
+
 .diagram-tabs-header {
   display: grid;
   gap: 10px;
@@ -541,6 +548,12 @@ li,
   filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.14));
 }
 
+.drawio-box.active {
+  stroke: var(--accent-2);
+  stroke-width: 2;
+  fill: color-mix(in srgb, var(--accent) 14%, var(--panel-strong));
+}
+
 .drawio-box.strong {
   fill: url(#coreGlow);
 }
@@ -556,6 +569,39 @@ li,
   fill: var(--muted);
   font-size: 12px;
   font-family: var(--font-sans), sans-serif;
+}
+
+.diagram-hotspot {
+  cursor: pointer;
+}
+
+.diagram-hotspot:hover .drawio-box {
+  stroke: var(--accent);
+}
+
+.panorama-inspector {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 76%, transparent);
+  display: grid;
+  gap: 12px;
+  position: sticky;
+  top: 10px;
+}
+
+.inspector-cta {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--text);
+  padding: 12px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.inspector-note {
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .diagram-node.strong {
@@ -648,7 +694,8 @@ li,
   .timeline,
   .detail-grid,
   .visual-grid,
-  .anchor-grid {
+  .anchor-grid,
+  .system-panorama {
     grid-template-columns: 1fr;
   }
 }
