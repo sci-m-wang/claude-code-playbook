@@ -604,6 +604,10 @@ li,
   font-size: 0.92rem;
 }
 
+.zoom-card {
+  min-height: 180px;
+}
+
 .diagram-node.strong {
   fill: url(#diagA);
 }

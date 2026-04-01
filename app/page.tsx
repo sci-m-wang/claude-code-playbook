@@ -83,6 +83,32 @@ export default function HomePage() {
 
       <ArchitectureDiagram />
 
+      <section className="visual-grid">
+        <article className="card zoom-card">
+          <p className="card-kicker">{locale === 'en' ? 'How to read the panorama' : '如何阅读总图'}</p>
+          <h3>{locale === 'en' ? 'Read left to right, then top to bottom' : '先横向看主链，再纵向看控制面'}</h3>
+          <p>
+            {locale === 'en'
+              ? 'The top horizontal path shows the main execution spine. The right side explains control planes. The lower band shows durable capabilities and platform extensions.'
+              : '顶部横向链路展示主执行脊柱；右侧是控制面；下方则是耐久能力与平台扩展层。'}
+          </p>
+        </article>
+        <article className="card zoom-card">
+          <p className="card-kicker">{locale === 'en' ? 'Legend' : '图例'}</p>
+          <h3>{locale === 'en' ? 'What visual emphasis means' : '不同视觉强调代表什么'}</h3>
+          <p>
+            {locale === 'en'
+              ? 'Highlighted boxes mark the execution center of gravity. Dashed groups show system boundaries. The inspector panel turns the overview into source-level navigation.'
+              : '高亮盒子表示执行重心；虚线分组表示系统边界；右侧 inspector 则把总图直接变成源码导航入口。'}
+          </p>
+          <div className="chip-row">
+            <span className="chip">{locale === 'en' ? 'Highlighted = critical runtime' : '高亮 = 关键运行时'}</span>
+            <span className="chip">{locale === 'en' ? 'Dashed = boundary group' : '虚线 = 边界分组'}</span>
+            <span className="chip">{locale === 'en' ? 'Inspector = source jump' : 'Inspector = 源码跳转'}</span>
+          </div>
+        </article>
+      </section>
+
       <section>
         <SectionHeader
           eyebrow={t('Analysis Focus', '分析重点')}
